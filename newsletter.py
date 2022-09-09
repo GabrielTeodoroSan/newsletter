@@ -1,3 +1,4 @@
+from email.mime import image
 import discord
 from news import getNews
 from discord.ext import commands
@@ -17,7 +18,13 @@ async def on_ready():
 async def news(ctx):
     notices = getNews()
     for notice in notices:
-            await ctx.send(notice[1])
+        try:
+            embed = discord.Embed(title=notice[0], url=notice[1], color=0x32D5BC)
+            embed.set_image(url=notices[2])
+            print(f"{embed.title} // {embed.url} // {embed.image}")
+            await ctx.send(embed=embed)
+        except:
+            ctx.send("Ocorreu um erro...")
 
 
 
