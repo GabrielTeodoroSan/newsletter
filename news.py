@@ -1,6 +1,6 @@
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
-import requests
+from models import news_models as models
 
 
 def createBs(url):
@@ -11,7 +11,7 @@ def createBs(url):
 def generateNotices():
     notices = getNews()
     for notice in notices:
-        notice[2] = downloadImage(notice[2], notice[0])
+        models.insert(notice)
     return notices
 
 
@@ -30,14 +30,6 @@ def formatNews(news):
             notice.find('a', {'class': 'feed-post-figure-link'}).img.attrs['src']
         ])
     return formatedNews
-
-
-def downloadImage(imageUrl, imageName):
-    imagePath = 'images/' + imageName + '.jpg'
-    image = open(imagePath, 'wb')
-    response = requests.get(imageUrl)
-    image.write(response.content)
-    return imagePath
 
 
 if __name__ == "__main__":

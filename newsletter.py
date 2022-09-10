@@ -1,8 +1,7 @@
-from email.mime import image
 import discord
-from news import getNews
 from discord.ext import commands
 from settings import DISCORD
+from news import generateNotices
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -16,12 +15,11 @@ async def on_ready():
 
 @bot.command()
 async def news(ctx):
-    notices = getNews()
+    notices = generateNotices()
     for notice in notices:
-        try:
+        try:    
             embed = discord.Embed(title=notice[0], url=notice[1], color=0x32D5BC)
-            embed.set_image(url=notices[2])
-            print(f"{embed.title} // {embed.url} // {embed.image}")
+            embed.set_image(url=notice[2])
             await ctx.send(embed=embed)
         except:
             ctx.send("Ocorreu um erro...")

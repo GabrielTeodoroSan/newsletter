@@ -9,11 +9,12 @@ def create():
         id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
         title VARCHAR(30),
         url VARCHAR(50),
-        image VARCHAR(30),
+        image VARCHAR(50),
         created_in timestamp
         )""")
 
     con.commit()
+    con.close()
 
 if __name__ == "__main__":
     create()
